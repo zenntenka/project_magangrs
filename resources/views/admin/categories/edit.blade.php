@@ -1,0 +1,49 @@
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+                    {{ __('Edit Kategori Kendala IT') }}
+                </h2>
+                <p class="text-sm text-gray-500 mt-1">
+                    Perbarui nama klasifikasi kategori kendala teknis.
+                </p>
+            </div>
+            <a href="{{ route('admin.categories.index') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition">
+                &larr; Kembali ke Daftar
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-8">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm">
+                <form action="{{ route('admin.categories.update', $category) }}" method="POST" class="space-y-6">
+                    @csrf
+                    @method('PUT')
+
+                    <div>
+                        <label for="nama" class="block text-sm font-semibold text-gray-700">
+                            Nama Kategori Kendala <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="nama" id="nama" value="{{ old('nama', $category->nama) }}" required autofocus
+                               class="mt-1 block w-full text-sm rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        @error('nama')
+                            <p class="mt-1.5 text-xs text-red-600 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-100">
+                        <a href="{{ route('admin.categories.index') }}" class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                            Batal
+                        </a>
+                        <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm transition">
+                            Perbarui Kategori
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+

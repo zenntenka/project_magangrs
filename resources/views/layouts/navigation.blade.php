@@ -5,22 +5,47 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ Auth::user()->role === 'admin' ? route('admin.dashboard') : (Auth::user()->role === 'teknisi' ? route('teknisi.dashboard') : route('dashboard')) }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index') || request()->routeIs('tickets.show')">
-                        {{ __('Tiket Saya') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('tickets.create')" :active="request()->routeIs('tickets.create')">
-                        {{ __('Buat Tiket') }}
-                    </x-nav-link>
+                    @if (Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Dashboard Admin') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.*')">
+                            {{ __('Semua Tiket') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.units.index')" :active="request()->routeIs('admin.units.*')">
+                            {{ __('Unit RS') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                            {{ __('Kategori') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Pengguna') }}
+                        </x-nav-link>
+                    @elseif (Auth::user()->role === 'teknisi')
+                        <x-nav-link :href="route('teknisi.dashboard')" :active="request()->routeIs('teknisi.dashboard')">
+                            {{ __('Dashboard Teknisi') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('teknisi.tickets.index')" :active="request()->routeIs('teknisi.tickets.*')">
+                            {{ __('Kelola Tiket IT') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index') || request()->routeIs('tickets.show')">
+                            {{ __('Tiket Saya') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('tickets.create')" :active="request()->routeIs('tickets.create')">
+                            {{ __('Buat Tiket') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -29,7 +54,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ Auth::user()->name }} ({{ ucfirst(Auth::user()->role) }})</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -73,15 +98,40 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index') || request()->routeIs('tickets.show')">
-                {{ __('Tiket Saya') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('tickets.create')" :active="request()->routeIs('tickets.create')">
-                {{ __('Buat Tiket') }}
-            </x-responsive-nav-link>
+            @if (Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Dashboard Admin') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.*')">
+                    {{ __('Semua Tiket') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.units.index')" :active="request()->routeIs('admin.units.*')">
+                    {{ __('Unit RS') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                    {{ __('Kategori Kendala') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                    {{ __('Pengguna') }}
+                </x-responsive-nav-link>
+            @elseif (Auth::user()->role === 'teknisi')
+                <x-responsive-nav-link :href="route('teknisi.dashboard')" :active="request()->routeIs('teknisi.dashboard')">
+                    {{ __('Dashboard Teknisi') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('teknisi.tickets.index')" :active="request()->routeIs('teknisi.tickets.*')">
+                    {{ __('Kelola Tiket IT') }}
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index') || request()->routeIs('tickets.show')">
+                    {{ __('Tiket Saya') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('tickets.create')" :active="request()->routeIs('tickets.create')">
+                    {{ __('Buat Tiket') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
