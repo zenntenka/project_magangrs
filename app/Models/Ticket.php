@@ -96,4 +96,52 @@ class Ticket extends Model
     {
         return $this->hasMany(TicketComment::class, 'ticket_id');
     }
+
+    /**
+     * Scope untuk memfilter data tiket pada modul laporan admin.
+     * Dipisahkan ke scope model agar query dapat dipakai ulang secara konsisten
+     * pada tampilan web, ekspor PDF, maupun ekspor Excel/CSV.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilterReport($query, array $filters = [])
+    {
+        return $query
+            ->when(!empty($filters['tanggal_mulai']), function ($q) use ($filters) {
+                $q->whereDate('tickets.created_at', '>=', $filters['tanggal_mulai']);
+            })
+            ->when(!empty($filters['tanggal_selesai']), function ($q) use ($filters) {
+                $q->whereDate('tickets.created_at', '<=', $filters['tanggal_selesai']);
+            })
+            ->when(!empty($filters['unit_id']), function ($q) use ($filters) {
+                $q->where('tickets.unit_id', $filters['unit_id']);
+            })
+            ->when(!empty($filters['category_id']), function ($q) use ($filters) {
+                $q->where('tickets.category_id', $filters['category_id']);
+            })
+            ->when(!empty($filters['status']), function ($q) use ($filters) {
+                $q->where('tickets.status', $filters['status']);
+            })
+            ->when(!empty($filters['teknisi_id']), function ($q) use ($filters) {
+                if ($filters['teknisi_id'] === 'unassigned') {
+                    $q->whereNull('tickets.teknisi_id');
+                } else {
+                    $q->where('tickets.teknisi_id', $filters['teknisi_id']);
+                }
+            });
+    }
+
+    /**
+     * Helper durasi penyelesaian tiket dalam format yang mudah dibaca.
+     */
+    public function getDurasiPenyelesaianAttribute(): string
+    {
+        if (!$this->waktu_selesai) {
+            return '-';
+        }
+
+        return $this->created_at->diffForHumans($this->waktu_selesai, true);
+    }
 }

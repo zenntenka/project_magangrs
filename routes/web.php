@@ -9,6 +9,16 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    $user = auth()->user();
+
+    if ($user && $user->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+
+    if ($user && $user->role === 'teknisi') {
+        return redirect()->route('teknisi.dashboard');
+    }
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -46,6 +56,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/tickets/{ticket}/assign', [\App\Http\Controllers\Admin\TicketController::class, 'assign'])->name('tickets.assign');
     Route::patch('/tickets/{ticket}/status', [\App\Http\Controllers\Admin\TicketController::class, 'updateStatus'])->name('tickets.status');
     Route::post('/tickets/{ticket}/comments', [\App\Http\Controllers\Admin\TicketController::class, 'storeComment'])->name('tickets.comments.store');
+
+    // Modul Laporan Helpdesk IT & Ekspor Data
+    Route::get('/laporan', [\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/pdf', [\App\Http\Controllers\Admin\ReportController::class, 'exportPdf'])->name('laporan.pdf');
+    Route::get('/laporan/excel', [\App\Http\Controllers\Admin\ReportController::class, 'exportExcel'])->name('laporan.excel');
 });
 
 require __DIR__.'/auth.php';

@@ -61,4 +61,45 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
         $response->assertRedirect('/');
     }
+
+    public function test_admin_is_redirected_to_admin_dashboard_after_login(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->post('/login', [
+            'email' => $admin->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('admin.dashboard', absolute: false));
+    }
+
+    public function test_teknisi_is_redirected_to_teknisi_dashboard_after_login(): void
+    {
+        $teknisi = User::factory()->create(['role' => 'teknisi']);
+
+        $response = $this->post('/login', [
+            'email' => $teknisi->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('teknisi.dashboard', absolute: false));
+    }
+
+    public function test_dashboard_url_redirects_admin_and_teknisi(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin)->get('/dashboard')
+            ->assertRedirect(route('admin.dashboard'));
+
+        $teknisi = User::factory()->create(['role' => 'teknisi']);
+        $this->actingAs($teknisi)->get('/dashboard')
+            ->assertRedirect(route('teknisi.dashboard'));
+
+        $pelapor = User::factory()->create(['role' => 'pelapor']);
+        $this->actingAs($pelapor)->get('/dashboard')
+            ->assertOk();
+    }
 }

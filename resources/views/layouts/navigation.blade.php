@@ -28,6 +28,9 @@
                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                             {{ __('Pengguna') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.laporan.index')" :active="request()->routeIs('admin.laporan.*')">
+                            {{ __('Laporan') }}
+                        </x-nav-link>
                     @elseif (Auth::user()->role === 'teknisi')
                         <x-nav-link :href="route('teknisi.dashboard')" :active="request()->routeIs('teknisi.dashboard')">
                             {{ __('Dashboard Teknisi') }}
@@ -113,6 +116,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                     {{ __('Pengguna') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.laporan.index')" :active="request()->routeIs('admin.laporan.*')">
+                    {{ __('Laporan') }}
                 </x-responsive-nav-link>
             @elseif (Auth::user()->role === 'teknisi')
                 <x-responsive-nav-link :href="route('teknisi.dashboard')" :active="request()->routeIs('teknisi.dashboard')">
