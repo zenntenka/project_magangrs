@@ -61,6 +61,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/laporan', [\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/pdf', [\App\Http\Controllers\Admin\ReportController::class, 'exportPdf'])->name('laporan.pdf');
     Route::get('/laporan/excel', [\App\Http\Controllers\Admin\ReportController::class, 'exportExcel'])->name('laporan.excel');
+
+    // Riwayat Masalah per Unit
+    Route::get('/unit-riwayat', [\App\Http\Controllers\Admin\UnitHistoryController::class, 'index'])->name('unit-riwayat.index');
+    Route::get('/unit-riwayat/{unit}', [\App\Http\Controllers\Admin\UnitHistoryController::class, 'show'])->name('unit-riwayat.show');
 });
 
 require __DIR__.'/auth.php';
