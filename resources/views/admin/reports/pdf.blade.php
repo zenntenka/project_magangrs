@@ -172,13 +172,19 @@
     <table class="kop-table">
         <tr>
             <td style="width: 70px; vertical-align: middle;">
-                <div style="width: 48px; height: 48px; background-color: #4F46E5; border-radius: 8px; color: #ffffff; text-align: center; line-height: 48px; font-weight: bold; font-size: 20px;">
-                    IT
-                </div>
+                @php
+                    $logoPath = public_path('images/logo-rs.png');
+                    $logoData = file_exists($logoPath)
+                        ? 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath))
+                        : null;
+                @endphp
+                @if ($logoData)
+                    <img src="{{ $logoData }}" style="width: 52px; height: 52px;" alt="Logo RS">
+                @endif
             </td>
             <td style="vertical-align: middle;">
-                <div class="kop-title">RUMAH SAKIT UMUM DAERAH</div>
-                <div class="kop-subtitle">INSTALASI TEKNOLOGI INFORMASI & KOMUNIKASI (IT HELPDESK SYSTEM)</div>
+                <div class="kop-title">RUMAH SAKIT 'AISYIYAH KUDUS</div>
+                <div class="kop-subtitle">Divisi IT, Helpdesk IT Internal</div>
                 <div style="font-size: 8px; color: #64748B;">Layanan Pengaduan Gangguan Sistem Informasi, Jaringan, dan Perangkat Medis / Non-Medis</div>
             </td>
             <td style="text-align: right; vertical-align: middle;">
