@@ -1,4 +1,8 @@
 <x-guest-layout>
+    <div class="mb-6">
+        <h2 class="text-xl font-bold text-gray-900">Masuk ke Akun</h2>
+        <p class="text-sm text-gray-500 mt-1">Gunakan akun yang diberikan oleh Divisi IT.</p>
+    </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
