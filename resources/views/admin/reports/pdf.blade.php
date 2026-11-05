@@ -173,13 +173,13 @@
         <tr>
             <td style="width: 70px; vertical-align: middle;">
                 @php
-                    $logoPath = public_path('images/logo-rs.png');
+                    $logoPath = public_path('images/logo-zz.png');
                     $logoData = file_exists($logoPath)
                         ? 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath))
                         : null;
                 @endphp
                 @if ($logoData)
-                    <img src="{{ $logoData }}" style="width: 52px; height: 52px;" alt="Logo RS">
+                    <img src="{{ $logoData }}" style="width: 52px; height: 52px;" alt="Logo Helpdesk IT">
                 @endif
             </td>
             <td style="vertical-align: middle;">

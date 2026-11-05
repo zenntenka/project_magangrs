@@ -16,21 +16,22 @@
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen grid lg:grid-cols-2">
 
-            {{-- Panel kiri: identitas RS (hanya tampil di layar lebar) --}}
+            {{-- Panel kiri: identitas aplikasi (hanya tampil di layar lebar) --}}
             <div class="hidden lg:flex relative overflow-hidden bg-brand-800 text-white flex-col justify-between p-12">
                 <div class="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-brand-500 opacity-20"></div>
                 <div class="absolute -bottom-32 -right-20 h-96 w-96 rounded-full bg-brand-500 opacity-10"></div>
 
                 <div class="relative flex items-center gap-3">
-                    <img src="{{ asset('images/logo-rs.png') }}" alt="Logo RS Aisyiyah Kudus" class="h-12 w-12 object-contain">
+                    <div class="rounded-full bg-white p-1.5 shadow">
+                        <img src="{{ asset('images/logo-zz.png') }}" alt="Logo Helpdesk IT" class="h-9 w-9 object-contain">
+                    </div>
                     <div class="leading-tight">
-                        <p class="font-bold text-lg">RS Aisyiyah Kudus</p>
-                        <p class="text-sm text-brand-100">Islamic, Safety and Care</p>
+                        <p class="font-bold text-lg">Helpdesk IT</p>
+                        <p class="text-sm text-brand-100">RS Aisyiyah Kudus</p>
                     </div>
                 </div>
 
                 <div class="relative">
-                    <img src="{{ asset('images/logo-rs.png') }}" alt="" class="h-28 w-28 object-contain mb-8 drop-shadow-lg">
                     <h1 class="text-4xl font-extrabold leading-tight">
                         Sistem <span class="text-brand-500">Helpdesk IT</span>
                     </h1>
@@ -49,16 +50,18 @@
             <div class="flex flex-col items-center justify-center bg-brand-50 px-6 py-10">
                 {{-- Logo untuk layar kecil --}}
                 <div class="lg:hidden flex flex-col items-center mb-6 text-center">
-                    <img src="{{ asset('images/logo-rs.png') }}" alt="Logo RS Aisyiyah Kudus" class="h-20 w-20 object-contain">
-                    <p class="mt-3 font-bold text-brand-800 text-lg leading-tight">RS Aisyiyah Kudus</p>
-                    <p class="text-sm text-gray-500">Helpdesk IT</p>
+                    <img src="{{ asset('images/logo-zz.png') }}" alt="Logo Helpdesk IT" class="h-20 w-20 object-contain">
+                    <p class="mt-3 font-bold text-brand-800 text-lg leading-tight">Helpdesk IT</p>
+                    <p class="text-sm text-gray-500">RS Aisyiyah Kudus</p>
                 </div>
 
                 <div class="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-100 px-8 py-8">
                     {{ $slot }}
                 </div>
 
-                <p class="mt-6 text-xs text-gray-400">&copy; {{ date('Y') }} RS Aisyiyah Kudus. Helpdesk IT Internal.</p>
+                <p class="mt-6 text-xs text-gray-400">
+                    Dikembangkan oleh Zain Zidan Z &middot; &copy; {{ date('Y') }} RS Aisyiyah Kudus
+                </p>
             </div>
         </div>
     </body>
